@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <p class="navbar-brand text-white">
+            <span class="align-middle fw-bold" th:text="${user.name}"></span>
+            <span class="align-middle">with roles:</span>
+            <span class="align-middle" th:each="role : ${user.authorities}" th:text="${role.authority} + ' '">
+            </span>
+        </p>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-dark text-secondary">Logout</button>
+        </form>
+    </div>
+</nav>
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Admin</button>
+        <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">User</button>
+    </div>
+    <div class="tab-content col" id="v-pills-tabContent">
+        <div class="tab-pane fade card" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">
+            <h1>User information-page</h1>
+            <h5 class="card-header">About user</h5>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Roles</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${user.userId}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.surname}"></td>
+                    <td>
+                        <div th:each="role : ${user.authorities}" th:text="${role.authority}"></div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+            <h1>Admin panel</h1>
+            <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" id="newUserButton" data-bs-toggle="pill" data-bs-target="#newUser" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">New user</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" id="tableButton" data-bs-toggle="pill" data-bs-target="#table" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="true">Table</a>
+                </li>
+            </ul>
+            <div class="tab-content col" id="adminTabsContent">
+                <div class="tab-pane fade show active card" id="table" role="tabpanel" aria-labelledby="tableButton" tabindex="0">
+                    <h5 class="card-header">All users</h5>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">userId</th>
+                            <th scope="col">name</th>
+                            <th scope="col">surname</th>
+                            <th scope="col">Roles</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="users">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane fade card" id="newUser" role="tabpanel" aria-labelledby="newUserButton" tabindex="0">
+                    <h5 class="card-header">Add new user</h5>
+                    <div class="col-md bg-white border">
+                        <form name="create" align="center" class="offset-md-4 col-md-3 mt-4 mb-4">
+                            <label for="name"><b>Name</b></label>
+                            <input name="name" type="text" class="form-control" id="name" required/>
+                            <br>
+                            <label for="surname"><b>Surname</b></label>
+                            <input name="surname" type="text" class="form-control" id="surname" required/>
+                            <br>
+                            <label for="password"><b>Password</b></label>
+                            <input name="password" type="password" class="form-control"
+                                   id="password"/>
+                            <br>
+                            <label for="role"><b>Role</b></label>
+                            <select multiple class="form-control form-control-sm" id="role" name="role" size="2" required>
+                                <option value="1">USER</option>
+                                <option value="2">ADMIN</option>
+                            </select>
+                            <br>
+                            <button type="button" id="addButton" class="btn btn-success" value="Add new user">Add new user
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+</html>
